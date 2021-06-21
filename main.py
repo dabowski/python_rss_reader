@@ -10,19 +10,23 @@ def save_lines_to_array(file_name):
 
 
 def print_feed(feed):
-    print(Fore.RED, feed['channel']['title'], Style.RESET_ALL, '\n')
+    print(Fore.RED, feed['feed']['title'], Style.RESET_ALL)
     for item in feed['items']:
         title_url = Fore.YELLOW + Style.BRIGHT + item['title'] + Style.RESET_ALL + " " + item['link']
         print(title_url)
 
 
-def print_feeds(url_array):
-    for url in url_array:
-        print_feed(feedparser.parse(url))
-        print("Press any key to move to continue...")
+def print_feeds(url_list):
+    for url in url_list:
+        try:
+            print_feed(feedparser.parse(url))
+            input("press any key to continue...")
+        except:
+            print(url, "It is not correct rss url.")
 
 
 if __name__ == "__main__":
+
     colorama.init()
     urls = save_lines_to_array("urls.txt")
 
